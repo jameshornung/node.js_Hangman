@@ -2,7 +2,7 @@
 
 var inquirer = require('inquirer');
 var words = require('./game.js');
-var fs = require('fs');
+var display = require('./letter.js');
 
 var currentWord;
 
@@ -11,11 +11,12 @@ function selectRandomWord(){
 	currentWord = words.possibleWords[x];
 }
 
+//select a random word from the game.js file
 selectRandomWord();
+var showPlayer = new Display(currentWord);
+showPlayer.originalDisplay();
 
-
-
-
+//prompt the user to guess a letter
 // inquirer.prompt([{
 // 	name: 'currentGuess',
 // 	message: 'Guess a letter'
