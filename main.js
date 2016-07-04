@@ -6,7 +6,15 @@ var fs = require('fs');
 
 var currentWord;
 
-console.log(words.randomWords[1]);
+function selectRandomWord(){
+	var x = Math.floor(Math.random() * 10)
+	currentWord = words.possibleWords[x];
+}
+
+selectRandomWord();
+
+
+
 
 // inquirer.prompt([{
 // 	name: 'currentGuess',
