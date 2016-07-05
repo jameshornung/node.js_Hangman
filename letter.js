@@ -19,7 +19,7 @@ Display = function(word){
 			}
 		}
 		console.log(this.arrayOfDashes.join(''));
-	}
+	},
 	this.updatedDisplay = function(letter){
 		for(i=0;i<this.wordArray.length;i++){
 			if(letter == this.wordArray[i]){
@@ -28,15 +28,14 @@ Display = function(word){
 		}
 		this.updated = this.arrayOfDashes.join('');
 		console.log(this.updated);
-	}
+	},
 	this.checkForWin = function(){
-		console.log('victory check complete')
-		console.log('entered word = ' + this.arrayOfDashes.join(''));
-		console.log(word);
-		if(this.arrayOfDashes.join('') == word){
-			victory = true;
-			return victory;
+		// console.log('victory check complete')
+		// console.log('entered word = ' + this.arrayOfDashes.join(''));
+		// console.log(word);
+		// if(this.arrayOfDashes.join('') == word){
+		// 	victory = true;
+		// 	return victory;
 
 		}
-	}
 }

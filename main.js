@@ -19,7 +19,11 @@ function selectRandomWord(){
 selectRandomWord();
 var showPlayer = new Display(currentWord);
 var checkLetter = new Check(currentWord);
+
+// This is for TROUBLESHOOTING - it provides the correct answer
 console.log('the word is: ' + currentWord);
+
+
 //Original display and instrictions
 console.log('');
 console.log('');
@@ -47,6 +51,8 @@ var guessLetters = function(){
 			console.log('You have already guessed that letter');
 			console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
 			console.log('Guesses Remaining: ' + remainingGuesses);
+			console.log('-------------------------------------------------------');
+			console.log('');
 			guessLetters();
 		}
 		else{
@@ -54,7 +60,9 @@ var guessLetters = function(){
 			if(checkLetter.currentWordArray.includes(answer.currentGuess)){
 				console.log('that was a correct answer');
 				showPlayer.updatedDisplay(answer.currentGuess);
-				if(victory){
+				console.log('Updated Word = ' + showPlayer.updated);
+				console.log('Current Word = ' + currentWord);
+				if(showPlayer.updated == currentWord){
 					console.log('You Win!');
 				}
 				else{
@@ -81,6 +89,7 @@ var guessLetters = function(){
 	else{
 		console.log('You Lose!');
 		console.log('The capital we were looking for was: ' + currentWord);
+		console.log('');
 	}
 }
 //Call the function
