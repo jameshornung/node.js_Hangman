@@ -6,8 +6,8 @@ var display = require('./letter.js');
 var check = require('./word.js');
 
 var currentWord;
-var remainingGuesses = 8;
-var victory = false;
+var remainingGuesses = 10;
+
 
 function selectRandomWord(){
 	var x = Math.floor(Math.random() * 10)
@@ -47,43 +47,54 @@ var guessLetters = function(){
 		name: 'currentGuess',
 		message: 'Guess a letter'
 	}]).then(function(answer){
-		if(checkLetter.lettersGuessed.includes(answer.currentGuess)){
-			console.log('You have already guessed that letter');
-			console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
-			console.log('Guesses Remaining: ' + remainingGuesses);
-			console.log('-------------------------------------------------------');
-			console.log('');
-			guessLetters();
-		}
-		else{
-			checkLetter.lettersGuessed.push(answer.currentGuess);
-			if(checkLetter.currentWordArray.includes(answer.currentGuess)){
-				console.log('that was a correct answer');
-				showPlayer.updatedDisplay(answer.currentGuess);
-				console.log('Updated Word = ' + showPlayer.updated);
-				console.log('Current Word = ' + currentWord);
-				if(showPlayer.updated == currentWord){
-					console.log('You Win!');
-				}
-				else{
-					console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
-					console.log('Guesses Remaining: ' + remainingGuesses);
-					console.log('-------------------------------------------------------');
-					console.log('');
-					guessLetters();	
-				}
-			}
-			else{
-				console.log('that was a wrong answer');
-				showPlayer.updatedDisplay(answer.currentGuess);
+		var letter = answer.currentGuess.toLowerCase();
+		var letters = /^[a-z]+$/;
+		//if letter is valid
+		if(letter.match(letters)){
+			if(checkLetter.lettersGuessed.includes(letter)){
+				console.log('You have already guessed that letter');
 				console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
-				remainingGuesses--;
 				console.log('Guesses Remaining: ' + remainingGuesses);
 				console.log('-------------------------------------------------------');
 				console.log('');
 				guessLetters();
 			}
-		}	
+			else{
+				checkLetter.lettersGuessed.push(letter);
+				if(checkLetter.currentWordArray.includes(letter)){
+					console.log('that was a correct answer');
+					showPlayer.updatedDisplay(letter);
+					console.log('Updated Word = ' + showPlayer.updated);
+					console.log('Current Word = ' + currentWord);
+					if(showPlayer.updated == currentWord){
+						console.log('You Win!');
+					}
+					else{
+						console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
+						console.log('Guesses Remaining: ' + remainingGuesses);
+						console.log('-------------------------------------------------------');
+						console.log('');
+						guessLetters();	
+					}
+				}
+				else{
+					console.log('that was a wrong answer');
+					showPlayer.updatedDisplay(letter);
+					console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
+					remainingGuesses--;
+					console.log('Guesses Remaining: ' + remainingGuesses);
+					console.log('-------------------------------------------------------');
+					console.log('');
+					guessLetters();
+				}
+			}
+		}
+		//if letter is not valid
+		else{
+			console.log('Please select an alphabetic character');
+			console.log('');
+			guessLetters();
+		}
 	});
 	}
 	else{
