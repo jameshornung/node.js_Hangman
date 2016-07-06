@@ -6,7 +6,9 @@ var display = require('./letter.js');
 var check = require('./word.js');
 
 var currentWord;
-var remainingGuesses = 10;
+var remainingGuesses = 1;
+var wins = 0;
+var losses = 0;
 
 
 function selectRandomWord(){
@@ -14,14 +16,52 @@ function selectRandomWord(){
 	currentWord = words.possibleWords[x];
 }
 
-//START THE GAME------------------------------------------------------------
+function restartGame(){
+	inquirer.prompt([{
+		name: 'play',
+		message: 'Play Again? (y or n)'
+	}]).then(function(answer){
+		var confirm = answer.play.toLowerCase();
+		if(confirm == 'y'){
+			remainingGuesses = 8;
+			checkLetter.lettersGuessed = [];
+			console.log('');
+			console.log('');
+			console.log('=========================================================');
+			console.log('HANGMAN');
+			console.log('=========================================================');
+			console.log('Welcome to the hangman man game - state capital edition.');
+			console.log('Let\'s get to guessing!');
+			console.log('');
+			console.log('Guess This Word:'); 
+			showPlayer.originalDisplay();
+			console.log('');
+			console.log('Guesses Remaining: ' + remainingGuesses);
+			console.log('');
+
+			selectRandomWord();
+			guessLetters();
+		}
+		else if(confirm == 'n'){
+			console.log('Thanks for playing!')
+		}
+		else{
+			console.log('Please select \'y\' or \'n\'');
+			restartGame();
+		}
+	})
+};
+
+
+
+//START GAME------------------------------------------------------------
 //select a random word from the state capital array 
 selectRandomWord();
 var showPlayer = new Display(currentWord);
 var checkLetter = new Check(currentWord);
 
 // This is for TROUBLESHOOTING - it provides the correct answer
-console.log('the word is: ' + currentWord);
+// console.log('the word is: ' + currentWord);
 
 
 //Original display and instrictions
@@ -62,12 +102,17 @@ var guessLetters = function(){
 			else{
 				checkLetter.lettersGuessed.push(letter);
 				if(checkLetter.currentWordArray.includes(letter)){
-					console.log('that was a correct answer');
+					console.log('That was a correct answer');
 					showPlayer.updatedDisplay(letter);
-					console.log('Updated Word = ' + showPlayer.updated);
-					console.log('Current Word = ' + currentWord);
+					
 					if(showPlayer.updated == currentWord){
+						wins++;
 						console.log('You Win!');
+						console.log('');
+						console.log('Number of wins: ' + wins);
+						console.log('Number of losses: ' + losses);
+						console.log('');
+						restartGame();
 					}
 					else{
 						console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
@@ -78,7 +123,7 @@ var guessLetters = function(){
 					}
 				}
 				else{
-					console.log('that was a wrong answer');
+					console.log('That was a wrong answer');
 					showPlayer.updatedDisplay(letter);
 					console.log('Letters Guessed: ' + checkLetter.lettersGuessed);
 					remainingGuesses--;
@@ -98,10 +143,17 @@ var guessLetters = function(){
 	});
 	}
 	else{
+		losses++;
 		console.log('You Lose!');
 		console.log('The capital we were looking for was: ' + currentWord);
 		console.log('');
+		console.log('Number of wins: ' + wins);
+		console.log('Number of losses: ' + losses);
+		console.log('');
+		restartGame();
 	}
 }
+
+
 //Call the function
 guessLetters();
