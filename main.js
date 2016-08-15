@@ -25,7 +25,6 @@ function selectRandomWord(){
 		checkLetter = new Check(currentWord);
 	}
 	wordsPlayed.push(currentWord);
-	console.log(wordsPlayed);
 }
 
 function restartGame(){
