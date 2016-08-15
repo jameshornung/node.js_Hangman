@@ -168,6 +168,6 @@ var guessLetters = function(){
 	}
 }
 
-
+console.log('updated');
 //Call the function
 guessLetters();
